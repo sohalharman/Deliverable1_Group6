@@ -4,7 +4,6 @@
  * @author Harmandeep Singh Sohal, Date: 16 June, 2023
  */
 package ca.sheridancollege.project;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
