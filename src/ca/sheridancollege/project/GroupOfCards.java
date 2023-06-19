@@ -15,14 +15,13 @@ import java.util.Collections;
  * @author Paul Bonenfant Jan 2020
  * @author Harmandeep Singh Sohal, Date: 16 June, 2023
  */
-public class GroupOfCards extends Card{
+public class GroupOfCards{
 
     //The group of cards, stored in an ArrayList
     private ArrayList<Card> cards;
     private int size;//the size of the grouping
 
     public GroupOfCards(int size) {
-        super(null,null);
         this.size = size;
         cards = new ArrayList<>();
     }
@@ -55,13 +54,11 @@ public class GroupOfCards extends Card{
     }
     
     /**
-     * Add a card to the cards list using this method
-     * @param suitIndex - The index of the suit of the card
-     * @param valueIndex - The index of the value of the card
+     * Add a card of a to the end of the card List
+     * @param card - The card to be added to the end of the list
      */
-    public void addCard(int suitIndex, int valueIndex){
-        Card cardTemp = new Card(Value.values()[valueIndex], Suit.values()[suitIndex]);
-        cards.add(cardTemp);
+    public void addCardTop(Card card){
+        cards.add(card);
     }
     
     /**
@@ -76,20 +73,26 @@ public class GroupOfCards extends Card{
     /**
      * This method create a pack or deck of cards 
      */
-    public void createPackOfCards(){
-        for(int i=0; i != Suit.values().length ; ++i){
-            for(int j=0; j!=Value.values().length; ++j){
-                Card cardTemp = new Card(Value.values()[j], Suit.values()[i]);
-                cards.add(cardTemp);
+    public void Deck(){
+        for(int i=0; i != CardGoFish.Suit.values().length ; ++i){
+            for(int j=0; j!=CardGoFish.Value.values().length; ++j){
+                Card card = new CardGoFish(CardGoFish.Suit.values()[i], CardGoFish.Value.values()[j]);
+                cards.add(card);
             }
         }
+        shuffle();
     }
     
+    /**
+     * Here we are overriding toString method to get the list of all cards in the list
+     * as a String
+    **/
     @Override
     public String toString(){
         String listOfCards = "This group of cards contain " + size + " cards.\n";
-        for(Card card:cards){
-            listOfCards += card.getSuit() + " of " + card.getValue() + "\n";
+        System.out.println("Here is the list of all the cards:");
+        for(Card card:this.cards){
+            listOfCards += ((CardGoFish)card).getSuit() + " of " + ((CardGoFish)card).getValue() + "\n";
         }
         return listOfCards;
     }

@@ -12,40 +12,14 @@ package ca.sheridancollege.project;
  * @author dancye
  * @author Harmandeep Singh Sohal, Date: 16 June, 2023
  */
-public class Card {
-    //default modifier for child classes
-    public enum Suit {
-        HEARTS, DIAMONDS, CLUBS, SPADES
-    }
-
-    public enum Value {
-        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-    }
+public abstract class Card {
+    //default modifier for child classes 
     
-    private Suit suit;
-    private Value value;
-    
-    // Constructor
-    public Card(Value value, Suit suit) {
-        this.value = value;
-        this.suit = suit;
-    }
-
-    // Getters for suit and value
-    public Suit getSuit() {
-        return this.suit;
-    }
-
-    public Value getValue() {
-        return this.value;
-    }
-    
-    // Setters for suit and value
-    public void setSuit(Suit suit){
-        this.suit = suit;
-    }
-    
-    public void setValue(Value value){
-        this.value = value;
-    }
+    /**
+     * Students should implement this method for their specific children classes
+     *
+     * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
+     */
+    @Override
+    public abstract String toString();
 }
