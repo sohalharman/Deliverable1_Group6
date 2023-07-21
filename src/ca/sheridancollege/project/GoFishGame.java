@@ -18,8 +18,9 @@ public class GoFishGame extends Game{
         goFishPlayers = new ArrayList<>();
         for(int i=0; i!=num; i++){
             Scanner in = new Scanner(System.in);
-            System.out.println("Enter name for Player " + (i+1) + " :");
+            System.out.print("Enter name for Player " + (i+1) + " :");
             String playerName = in.nextLine();
+            System.out.println();
             goFishPlayers.add(new GoFishPlayer(playerName, 5));
         }
     }
@@ -31,9 +32,9 @@ public class GoFishGame extends Game{
         
         System.out.println("Creating a deck of all cards...");
         drawPile.createDeck();
-        System.out.println("Dealing 5 cards to each of the Players...");
+        System.out.println("Dealing 5 cards to each of the Players...\n");
         for(int i=0; i!=5*numPlayers;i++){
-            goFishPlayers.get(i%(numPlayers-1)).addCard(drawPile.getCards().get(i));
+            goFishPlayers.get(i%(numPlayers)).addCard(drawPile.getCards().get(51 - i));
             drawPile.removeCard();
         }
         
@@ -51,7 +52,7 @@ public class GoFishGame extends Game{
     
     @Override
     public String toString(){
-        String out = "There are " + numPlayers + " in the GoFish game\n" +  "List of Players in GoFish Game along with the cards:\n";
+        String out = "There are " + numPlayers + " players in the GoFish game\n\n" +  "List of Players in GoFish Game along with the cards:\n";
         for(int i=0; i!=numPlayers; i++){
             out += goFishPlayers.get(i).getName() + " : " + goFishPlayers.get(i).getPlayerCards().toString() + "\n";
         }
