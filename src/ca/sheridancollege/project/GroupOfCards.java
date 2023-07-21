@@ -73,7 +73,7 @@ public class GroupOfCards{
     /**
      * This method create a pack or deck of cards 
      */
-    public void Deck(){
+    public void createDeck(){
         for(int i=0; i != CardGoFish.Suit.values().length ; ++i){
             for(int j=0; j!=CardGoFish.Value.values().length; ++j){
                 Card card = new CardGoFish(CardGoFish.Suit.values()[i], CardGoFish.Value.values()[j]);
@@ -90,9 +90,9 @@ public class GroupOfCards{
     @Override
     public String toString(){
         String listOfCards = "This group of cards contain " + size + " cards.\n";
-        System.out.println("Here is the list of all the cards you have: ");
+        System.out.println("Here is the list of all the cards the Player has: ");
         for(Card card:this.cards){
-            listOfCards += ((CardGoFish)card).getSuit() + " of " + ((CardGoFish)card).getValue() + "\n";
+            listOfCards += card.toString();
         }
         return listOfCards;
     }

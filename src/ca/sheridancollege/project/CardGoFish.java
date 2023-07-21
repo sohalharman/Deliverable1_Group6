@@ -46,6 +46,6 @@ public class CardGoFish extends Card {
     
     @Override
     public String toString(){
-        return "[" + suit + "] of [" + value + "]";
+        return "[" + value + "] of [" + suit + "]\n";
     }
 }

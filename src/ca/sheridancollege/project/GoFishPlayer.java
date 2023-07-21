@@ -5,9 +5,19 @@ package ca.sheridancollege.project;
  * @author Harmandeep Singh Sohal
  */
 public class GoFishPlayer extends Player{
-    GroupOfCards cards;
-    public GoFishPlayer(String name){
+    private GroupOfCards cards;
+    
+    public GoFishPlayer(String name, int n){
         super(name);
+        cards = new GroupOfCards(n);
+    }
+    
+    public GroupOfCards getPlayerCards(){
+        return cards;
+    }
+    
+    public void addCard(Card card1){
+        cards.addCardTop(card1);
     }
     
     @Override

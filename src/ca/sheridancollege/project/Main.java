@@ -19,8 +19,8 @@ public class Main {
              System.out.println("Please enter an integer value!");
          }
          
-         Game goFish = new GoFishGame(numPlayers);
+         GoFishGame goFish = new GoFishGame(numPlayers);
+         goFish.dealCards();
          System.out.println(goFish.toString());
-               
     }
 }
