@@ -90,7 +90,7 @@ public class GroupOfCards{
     @Override
     public String toString(){
         String listOfCards = "This group of cards contain " + size + " cards.\n";
-        System.out.println("Here is the list of all the cards:");
+        System.out.println("Here is the list of all the cards you have: ");
         for(Card card:this.cards){
             listOfCards += ((CardGoFish)card).getSuit() + " of " + ((CardGoFish)card).getValue() + "\n";
         }
