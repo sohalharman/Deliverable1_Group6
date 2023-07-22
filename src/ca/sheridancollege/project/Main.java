@@ -20,7 +20,6 @@ public class Main {
          }
          
          GoFishGame goFish = new GoFishGame(numPlayers);
-         goFish.dealCards();
-         System.out.println(goFish.toString());
+         goFish.play();
     }
 }

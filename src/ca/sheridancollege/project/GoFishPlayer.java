@@ -22,8 +22,11 @@ public class GoFishPlayer extends Player{
     
     @Override
     public void play(){
-        cards.toString();
-        System.out.println("Select a player to ask for a card from your group of cards");
-        
+        System.out.println("It is " + getName() + "'s turn");
+        System.out.print("Here are the cards you have. ");
+        System.out.println(cards.toString());
+        System.out.print("Select a player to ask for a card from your group of cards. ");
     }
+    
+    
 }

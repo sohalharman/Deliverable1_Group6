@@ -7,7 +7,7 @@ package ca.sheridancollege.project;
  * a standard deck of 52 cards. We will be implementing the overridden toString method here.
  * @author Harmandeep Singh Sohal
  */
-public class CardGoFish extends Card {
+class CardGoFish extends Card {
     public enum Suit {
         HEARTS, DIAMONDS, CLUBS, SPADES
     }

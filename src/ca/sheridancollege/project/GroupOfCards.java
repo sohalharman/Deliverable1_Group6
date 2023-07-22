@@ -15,8 +15,7 @@ import java.util.Collections;
  * @author Paul Bonenfant Jan 2020
  * @author Harmandeep Singh Sohal, Date: 16 June, 2023
  */
-public class GroupOfCards{
-
+public class GroupOfCards extends Card{
     //The group of cards, stored in an ArrayList
     private ArrayList<Card> cards;
     private int size;//the size of the grouping
@@ -59,6 +58,7 @@ public class GroupOfCards{
      */
     public void addCardTop(Card card){
         cards.add(card);
+        ++this.size;
     }
     
     /**
@@ -67,6 +67,7 @@ public class GroupOfCards{
     public void removeCard(){
         if(!cards.isEmpty()){
             cards.remove(cards.size()-1);
+            --this.size;
         }
     }
     
