@@ -44,6 +44,7 @@ class CardGoFish extends Card {
         this.value = value;
     }
     
+    // Method to print the Value and Suit in a Card
     @Override
     public String toString(){
         return "[" + value + "] of [" + suit + "]\n";
