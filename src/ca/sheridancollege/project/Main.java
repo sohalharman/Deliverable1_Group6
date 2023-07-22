@@ -10,16 +10,32 @@ import java.util.InputMismatchException;
  */
 public class Main {
     public static void main(String[]args){
-         Scanner in = new Scanner(System.in);
-         System.out.println("Please enter the number of players playing the game? 2, 3 or 4?");
-         int numPlayers = 0;
-         try{
-             numPlayers = in.nextInt();
-         }catch(InputMismatchException e){
-             System.out.println("Please enter an integer value!");
-         }
-         
-         GoFishGame goFish = new GoFishGame(numPlayers);
-         goFish.play();
+        int numPlayers = getNumberOfPlayers();
+        GoFishGame goFish = new GoFishGame(numPlayers);
+        goFish.play();
+    }
+    
+    /**
+     * Helper method to get the number of Players from the user before the start of the game
+     */
+    private static int getNumberOfPlayers(){
+        Scanner in = new Scanner(System.in);
+        int num;
+        while(true){
+            System.out.print("Please enter the number of players playing the game?");
+            try{
+                num = in.nextInt();
+                if(num < 2 || num > 8){
+                    System.out.println("The Game can have minimum of 2 and maximum of 8 Players only!!!\n");
+                    continue;
+                }
+                break;
+            }catch(InputMismatchException e){
+                System.out.println("Please enter an integer value!\n");
+                in.nextLine();
+            }
+        }
+        System.out.println();
+        return num;
     }
 }
