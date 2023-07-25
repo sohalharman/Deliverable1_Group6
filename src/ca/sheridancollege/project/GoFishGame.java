@@ -57,8 +57,28 @@ public class GoFishGame extends Game{
             int playerSelectedIndex = selectPlayer(currentPlayerIndex);
             int cardChosen = askCard(currentPlayerIndex, playerSelectedIndex);
             
+            boolean isGoFish = false;
+            CardGoFish.Value valueChosen = ((CardGoFish)(goFishPlayers.get(currentPlayerIndex).getPlayerCards().getCards().get(cardChosen))).getValue();
+            for(int j=0; j!=goFishPlayers.get(playerSelectedIndex).getPlayerCards().getSize(); j++){
+                CardGoFish.Value valuePlayerSelected = ((CardGoFish)(goFishPlayers.get(playerSelectedIndex).getPlayerCards().getCards().get(j))).getValue();
+                if(valuePlayerSelected.equals(valueChosen)){
+                    Card cardAsked = goFishPlayers.get(playerSelectedIndex).getPlayerCards().getCards().get(j);
+                    System.out.println(goFishPlayers.get(playerSelectedIndex).getName() + " gave you " + cardAsked.toString());
+                    goFishPlayers.get(currentPlayerIndex).getPlayerCards().addCardTop(cardAsked);
+                    goFishPlayers.get(playerSelectedIndex).getPlayerCards().removeCard();
+                    isGoFish = true;
+                }
+            }
+            if(!isGoFish){
+                System.out.println("GO FISH!!!");
+                Card drawPileCard = drawPile.getCards().get(drawPile.getSize() - 1);
+                goFishPlayers.get(currentPlayerIndex).getPlayerCards().addCardTop(drawPileCard);
+                drawPile.removeCard();
+            }
+            
             
             System.out.println();
+            System.out.println(toString());
         }
     }
     
@@ -70,12 +90,13 @@ public class GoFishGame extends Game{
         Scanner in = new Scanner(System.in);
         int cardChosenIndex;
         while(true){
-            System.out.print("Please ask " + goFishPlayers.get(playerSelectedIndex).getName() + " for any card from your Pile by selecting its index: ");
+            System.out.print("Please ask " + goFishPlayers.get(playerSelectedIndex).getName() + " for any card Value from your Pile by selecting its index: ");
             try{
                 cardChosenIndex = in.nextInt();
-                int numPlayerCards = goFishPlayers.get(currentPlayerIndex%numPlayers).getPlayerCards().getSize();
+                --cardChosenIndex;
+                int numPlayerCards = goFishPlayers.get(currentPlayerIndex).getPlayerCards().getSize();
                 if(cardChosenIndex <= 0 || cardChosenIndex > numPlayerCards){
-                    System.out.println("Please chose a card index between 1 and " + numPlayerCards + "!!!\n");
+                    System.out.println("Please chose a card Value index between 1 and " + numPlayerCards + "!!!\n");
                     continue;
                 }
                 break;
