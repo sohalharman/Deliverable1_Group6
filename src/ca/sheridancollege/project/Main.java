@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 public class Main {
     public static void main(String[]args){
         int numPlayers = getNumberOfPlayers();
-        GoFishGame goFish = new GoFishGame(numPlayers);
+        Game goFish = new GoFishGame(numPlayers);
         goFish.play();
     }
     

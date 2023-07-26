@@ -59,7 +59,7 @@ public class GoFishGame extends Game{
             
             boolean isGoFish = false;
             CardGoFish.Value valueChosen = ((CardGoFish)(goFishPlayers.get(currentPlayerIndex).getPlayerCards().getCards().get(cardChosen))).getValue();
-            for(int j=0; j!=goFishPlayers.get(playerSelectedIndex).getPlayerCards().getSize(); j++){
+            for(int j=0; j!=(goFishPlayers.get(playerSelectedIndex).getPlayerCards().getSize()) - 1; j++){
                 CardGoFish.Value valuePlayerSelected = ((CardGoFish)(goFishPlayers.get(playerSelectedIndex).getPlayerCards().getCards().get(j))).getValue();
                 if(valuePlayerSelected.equals(valueChosen)){
                     Card cardAsked = goFishPlayers.get(playerSelectedIndex).getPlayerCards().getCards().get(j);
@@ -114,9 +114,9 @@ public class GoFishGame extends Game{
     private void printPlayers(){
         System.out.println("Here is a list of all players: ");
         for(int j=0; j!=numPlayers; j++){
-            System.out.println(goFishPlayers.get(j).getName());
+            System.out.println((j+1) + ". " + goFishPlayers.get(j).getName());
         }
-        System.out.println();
+        System.out.print("Please type the player name you want to ask a card from: ");
     }
     
     /**
@@ -128,7 +128,6 @@ public class GoFishGame extends Game{
         while(true){
             boolean playerSelectedSelf = false;
             Scanner in = new Scanner(System.in);
-            System.out.print("Choose the player you want to ask for a card: ");
             String name = in.nextLine();
             boolean playerFound = false;
 

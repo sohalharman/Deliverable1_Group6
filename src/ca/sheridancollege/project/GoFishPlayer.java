@@ -34,7 +34,7 @@ public class GoFishPlayer extends Player{
         System.out.println("It is " + getName() + "'s turn");
         System.out.print("Here are the cards you have. ");
         System.out.println(cards.toString());
-        System.out.print("Select a player to ask for a card from your group of cards. ");
+        System.out.print(getName() + ", please select a player to ask for a card from your group of cards. ");
     }
     
     
