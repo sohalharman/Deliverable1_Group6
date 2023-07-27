@@ -90,7 +90,7 @@ public class GroupOfCards extends Card{
     **/
     @Override
     public String toString(){
-        String listOfCards = "There are " + size + " cards listed below:\n";
+        String listOfCards = "There are " + ConsoleTextColour.ANSI_RED + size + ConsoleTextColour.ANSI_RESET + " cards listed below:\n";
         int index = 1;
         for(Card card:this.cards){
             listOfCards += index + ". " + card.toString();

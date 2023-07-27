@@ -22,16 +22,21 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int num;
         while(true){
-            System.out.print("Please enter the number of players playing the game?");
+            System.out.print(ConsoleTextColour.ANSI_GREEN + "Please enter the number of players playing the game: " + ConsoleTextColour.ANSI_RESET);
             try{
                 num = in.nextInt();
                 if(num < 2 || num > 8){
-                    System.out.println("The Game can have minimum of 2 and maximum of 8 Players only!!!\n");
+                    String temp = ConsoleTextColour.ANSI_RED + "The Game can have minimum of "+ 
+                                  ConsoleTextColour.ANSI_YELLOW + "[2]" + 
+                                  ConsoleTextColour.ANSI_RED + " and maximum of " + 
+                                  ConsoleTextColour.ANSI_YELLOW + "[8]" + 
+                                  ConsoleTextColour.ANSI_RED + " Players only!!!\n" + ConsoleTextColour.ANSI_RESET;
+                    System.out.println(temp);
                     continue;
                 }
                 break;
             }catch(InputMismatchException e){
-                System.out.println("Please enter an integer value!\n");
+                System.out.println(ConsoleTextColour.ANSI_RED + "Please enter an integer value!\n" + ConsoleTextColour.ANSI_RESET);
                 in.nextLine();
             }
         }

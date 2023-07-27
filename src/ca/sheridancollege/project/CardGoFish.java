@@ -47,6 +47,6 @@ class CardGoFish extends Card {
     // Method to print the Value and Suit in a Card
     @Override
     public String toString(){
-        return "[" + value + "] of [" + suit + "]\n";
+        return "[" + ConsoleTextColour.ANSI_YELLOW + value + ConsoleTextColour.ANSI_RESET + "] of [" + ConsoleTextColour.ANSI_YELLOW + suit + ConsoleTextColour.ANSI_RESET + "]\n";
     }
 }

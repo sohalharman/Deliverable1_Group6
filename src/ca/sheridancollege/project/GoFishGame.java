@@ -19,8 +19,19 @@ public class GoFishGame extends Game{
         goFishPlayers = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         for(int i=0; i!=num; i++){
-            System.out.print("Enter name for Player " + (i+1) + " :");
-            String playerName = in.nextLine();
+            System.out.print(ConsoleTextColour.ANSI_CYAN + "Enter name for Player " + (i+1) + ": " + ConsoleTextColour.ANSI_RESET);
+            String playerName = in.nextLine(); 
+            boolean toContinue = false;
+            for(int j=0; j!=goFishPlayers.size(); j++){
+                if(goFishPlayers.get(j).getName().equalsIgnoreCase(playerName)){
+                    System.out.println(ConsoleTextColour.ANSI_RED + "You cannot enter the same name for two players!!!" + ConsoleTextColour.ANSI_RESET + "\n");
+                    toContinue = true;
+                }
+            }
+            if(toContinue){
+                i--;
+                continue;
+            }      
             System.out.println();
             goFishPlayers.add(new GoFishPlayer(playerName, 0));
         }
@@ -34,9 +45,9 @@ public class GoFishGame extends Game{
     private void dealCards(){
         drawPile = new GroupOfCards(52);
         
-        System.out.println("Creating a deck of all cards...");
+        System.out.println(ConsoleTextColour.ANSI_YELLOW + "Creating a deck of all cards..." + ConsoleTextColour.ANSI_RESET);
         drawPile.createDeck();
-        System.out.println("Dealing 5 cards to each of the Players...\n");
+        System.out.println(ConsoleTextColour.ANSI_YELLOW + "Dealing 5 cards to each of the Players...\n" + ConsoleTextColour.ANSI_RESET);
         for(int i=0; i!=5*numPlayers;i++){
             goFishPlayers.get(i%(numPlayers)).addCard(drawPile.getCards().get(51 - i));
             drawPile.removeCard();
@@ -45,19 +56,47 @@ public class GoFishGame extends Game{
     }
     
     /**
+     * This is welcome message that introduces the game when the user starts it
+     */
+    public void welcomeMessage(){
+        System.out.println(ConsoleTextColour.ANSI_BLUE + "________________________________________________________________________________________" + ConsoleTextColour.ANSI_RESET);
+        String text =  
+                      "  ________         ___________.__       .__\n" +    
+                      " /  _____/  ____   \\_   _____/|__| _____|  |__\n" +  
+                      "/   \\  ___ /  _ \\   |    __)  |  |/  ___/  |  \\ \n" +
+                      "\\    \\_\\  (  <_> )  |     \\   |  |\\___ \\|   Y  \\\n" +
+                      " \\______  /\\____/   \\___  /   |__/____  >___|  /\n" +
+                      "        \\/              \\/            \\/     \\/ ";
+
+        final int consoleWidth = 80;
+        String[] lines = text.split("\n");
+
+        for (String line : lines) {
+            int paddingSize = (consoleWidth - line.length()) / 2;
+            for (int i = 0; i < paddingSize; i++) {
+                System.out.print(" ");
+            }
+            System.out.println(ConsoleTextColour.ANSI_GREEN + line + ConsoleTextColour.ANSI_RESET);
+        }
+        System.out.println(ConsoleTextColour.ANSI_BLUE + "________________________________________________________________________________________" + ConsoleTextColour.ANSI_RESET);
+        System.out.println("\n");
+    }
+    
+    /**
      * This is the main method that will be called by the user to start the game. It contains the game logic.
      */
     @Override
     public void play(){
+        welcomeMessage();
         dealCards();
         for(int i=0; drawPile.getSize()!=0; i++){
             int currentPlayerIndex = i%numPlayers;
             goFishPlayers.get(currentPlayerIndex).play();
-            printPlayers();
+            printPlayers(currentPlayerIndex);
             int playerSelectedIndex = selectPlayer(currentPlayerIndex);
             int cardChosen = askCard(currentPlayerIndex, playerSelectedIndex);
             
-            boolean isGoFish = false;
+            boolean isGoFish = true;
             CardGoFish.Value valueChosen = ((CardGoFish)(goFishPlayers.get(currentPlayerIndex).getPlayerCards().getCards().get(cardChosen))).getValue();
             for(int j=0; j!=(goFishPlayers.get(playerSelectedIndex).getPlayerCards().getSize()) - 1; j++){
                 CardGoFish.Value valuePlayerSelected = ((CardGoFish)(goFishPlayers.get(playerSelectedIndex).getPlayerCards().getCards().get(j))).getValue();
@@ -66,10 +105,10 @@ public class GoFishGame extends Game{
                     System.out.println(goFishPlayers.get(playerSelectedIndex).getName() + " gave you " + cardAsked.toString());
                     goFishPlayers.get(currentPlayerIndex).getPlayerCards().addCardTop(cardAsked);
                     goFishPlayers.get(playerSelectedIndex).getPlayerCards().removeCard();
-                    isGoFish = true;
+                    isGoFish = false;
                 }
             }
-            if(!isGoFish){
+            if(isGoFish){
                 System.out.println("GO FISH!!!");
                 Card drawPileCard = drawPile.getCards().get(drawPile.getSize() - 1);
                 goFishPlayers.get(currentPlayerIndex).getPlayerCards().addCardTop(drawPileCard);
@@ -89,19 +128,20 @@ public class GoFishGame extends Game{
     private int askCard(int currentPlayerIndex, int playerSelectedIndex){
         Scanner in = new Scanner(System.in);
         int cardChosenIndex;
+        int numPlayerCards = 0;
         while(true){
-            System.out.print("Please ask " + goFishPlayers.get(playerSelectedIndex).getName() + " for any card Value from your Pile by selecting its index: ");
+            System.out.print("Please ask " + "[" + ConsoleTextColour.ANSI_PURPLE + goFishPlayers.get(playerSelectedIndex).getName() + ConsoleTextColour.ANSI_RESET + "]" + " for any card Value from your Pile by selecting its index: ");
             try{
                 cardChosenIndex = in.nextInt();
                 --cardChosenIndex;
-                int numPlayerCards = goFishPlayers.get(currentPlayerIndex).getPlayerCards().getSize();
-                if(cardChosenIndex <= 0 || cardChosenIndex > numPlayerCards){
-                    System.out.println("Please chose a card Value index between 1 and " + numPlayerCards + "!!!\n");
+                numPlayerCards = goFishPlayers.get(currentPlayerIndex).getPlayerCards().getSize();
+                if(cardChosenIndex < 0 || cardChosenIndex >= numPlayerCards){
+                    System.out.println(ConsoleTextColour.ANSI_RED + "Please chose a card Value index between 1 and " + numPlayerCards + "!!!\n" + ConsoleTextColour.ANSI_RESET);
                     continue;
                 }
                 break;
             }catch(InputMismatchException e){
-                System.out.println("Please enter an integer value!!!\n");
+                System.out.println(ConsoleTextColour.ANSI_RED + "Please enter an integer value!!!\n" + ConsoleTextColour.ANSI_RESET);
                 in.nextLine();
             }
         }
@@ -111,12 +151,13 @@ public class GoFishGame extends Game{
     /**
      * This private helper method Prints the name of all the Players in the current Game
      */
-    private void printPlayers(){
+    private void printPlayers(int currentPlayerIndex){
         System.out.println("Here is a list of all players: ");
         for(int j=0; j!=numPlayers; j++){
-            System.out.println((j+1) + ". " + goFishPlayers.get(j).getName());
+            System.out.println((j+1) + ". " + ConsoleTextColour.ANSI_PURPLE + goFishPlayers.get(j).getName() + ConsoleTextColour.ANSI_RESET);
         }
-        System.out.print("Please type the player name you want to ask a card from: ");
+        System.out.println();
+        System.out.print("[" + ConsoleTextColour.ANSI_PURPLE + goFishPlayers.get(currentPlayerIndex).getName() + ConsoleTextColour.ANSI_RESET + "]" + ", please select a player to ask for a card from your group of cards: ");
     }
     
     /**
@@ -134,7 +175,8 @@ public class GoFishGame extends Game{
             for(int k=0; k<numPlayers ; k++){
                 if(name.equalsIgnoreCase(goFishPlayers.get(k).getName())){
                     if(k==currentPlayerIndex){
-                        System.out.println("You cannot choose yourself!!!\n");
+                        System.out.println(ConsoleTextColour.ANSI_RED + "You cannot choose yourself!!!\n");
+                        System.out.print("[" + ConsoleTextColour.ANSI_PURPLE + goFishPlayers.get(currentPlayerIndex).getName() + ConsoleTextColour.ANSI_RESET + "]" + ", please select a player to ask for a card from your group of cards: ");
                         playerSelectedSelf = true;
                         break;
                     }
@@ -148,7 +190,8 @@ public class GoFishGame extends Game{
                 continue;
             }
             if(!playerFound) {
-                System.out.println("There is no player in the game with the name " + name + ". Please try again!!!\n");
+                System.out.println(ConsoleTextColour.ANSI_RED + "There is no player in the game with the name " + name + ". Please try again!!!\n" + ConsoleTextColour.ANSI_RESET);
+                System.out.print("[" + ConsoleTextColour.ANSI_PURPLE + goFishPlayers.get(currentPlayerIndex).getName() + ConsoleTextColour.ANSI_RESET + "]" + ", please select a player to ask for a card from your group of cards: ");
             } 
             else {
                 System.out.println();
