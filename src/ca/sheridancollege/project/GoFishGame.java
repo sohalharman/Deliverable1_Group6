@@ -42,7 +42,7 @@ public class GoFishGame extends Game{
      * In this method we first create a deck of cards and then deal 5 cards to each of the players 
      * and then the remaining cards will be left in drawPile variable.
      */ 
-    private void dealCards(){
+    void dealCards(){
         drawPile = new GroupOfCards(52);
         
         System.out.println(ConsoleTextColour.ANSI_YELLOW + "Creating a deck of all cards..." + ConsoleTextColour.ANSI_RESET);
@@ -119,6 +119,7 @@ public class GoFishGame extends Game{
             System.out.println();
             System.out.println(toString());
         }
+        declareWinner();
     }
     
     /**
@@ -200,12 +201,75 @@ public class GoFishGame extends Game{
         }
         return playerSelectedIndex;
     }
+   
+   // 
     
-    @Override
-    public void declareWinner(){
-        
+    
+    
+    
+    
+    private int calculateBooks(GoFishPlayer player) {
+    int books = 0;
+    GroupOfCards playerCards = player.getPlayerCards();
+
+    // will put the occurences of each card into an array
+    int[] Occurences = new int[CardGoFish.Value.values().length];
+    
+    
+    for (Card card : playerCards.getCards()) {
+        CardGoFish.Value value = ((CardGoFish) card).getValue();//to get the value of card
+        Occurences[value.ordinal()]++;//will increment the value by one in the occurences array
     }
-    
+
+    // Count the number of books
+    //sets of four
+    for (int count : Occurences) {
+        books += count / 4;
+    }
+
+    return books;
+}
+ @Override
+public void declareWinner() {
+    int maxBooks = -1; 
+    GoFishPlayer winner = null;
+
+    // with this for loop it will iterate over each player to find the number of books
+    for (GoFishPlayer player : goFishPlayers) {
+         
+       int books = calculateBooks(player); 
+     // if any player has more books than the maxBooks he will be declared winner
+        if (books > maxBooks) {
+            maxBooks = books;
+            winner = player;
+        
+            //For the scenario when two or more players have books equal to manBooks
+        } else if (books == maxBooks) {
+        
+            // current number of cards of the player
+            //Book*4 means total book cards, (book has 4 cards)
+            // minus it from total cards gives us current cards
+          
+            int currentCards = player.getPlayerCards().getSize() - (books * 4);
+            
+            // current number of cards of the winner
+            int currentWinnerCards = winner.getPlayerCards().getSize() - (maxBooks * 4);
+
+            if (currentCards > currentWinnerCards) {
+                winner = player;
+            }
+        }
+    }
+
+    if (winner != null) {
+        System.out.println("Congratulations, the winner is: " + winner.getName());
+    } else {
+        System.out.println("Nobody won this game.");
+    }
+
+}
+
+
     /**
      * This overridden toString method prints the list of all the players in the GoFish game along with the cards that they
      * currently hold and also prints all the cards in the draw Pile.
