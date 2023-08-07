@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
+
+
 /**
  * This class +++ Insert class description here +++
  * @author Harmandeep Singh Sohal
@@ -36,6 +38,15 @@ public class GoFishGame extends Game{
             goFishPlayers.add(new GoFishPlayer(playerName, 0));
         }
         
+    }
+    
+    // Getters
+    public int getNumPlayers(){
+        return this.numPlayers;
+    }
+    
+    public GroupOfCards getDrawPile(){
+        return this.drawPile;
     }
     
     /**
