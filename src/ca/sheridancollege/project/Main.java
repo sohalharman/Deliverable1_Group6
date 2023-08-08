@@ -18,7 +18,7 @@ public class Main {
     /**
      * Helper method to get the number of Players from the user before the start of the game
      */
-    private static int getNumberOfPlayers(){
+    public static int getNumberOfPlayers(){
         Scanner in = new Scanner(System.in);
         int num;
         while(true){
