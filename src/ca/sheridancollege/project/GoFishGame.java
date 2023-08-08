@@ -128,7 +128,6 @@ public class GoFishGame extends Game{
             
             
             System.out.println();
-            System.out.println(toString());
         }
         declareWinner();
     }

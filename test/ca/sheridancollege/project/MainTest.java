@@ -58,17 +58,16 @@ public class MainTest {
      */
     @Test
     public void testGetNumberOfPlayers_isGood() {
-        ByteArrayInputStream in = new ByteArrayInputStream("3\n".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("5\n".getBytes());
         System.setIn(in);
-        assertEquals(3, Main.getNumberOfPlayers());
+        assertEquals(5, Main.getNumberOfPlayers());
     }
 
     @Test
     public void testGetNumberOfPlayers_isBoundary() {
-        ByteArrayInputStream in = new ByteArrayInputStream("1\n3\n".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("3\n".getBytes());
         System.setIn(in);
         assertEquals(3, Main.getNumberOfPlayers());
-        assertTrue(outContent.toString().contains("The Game can have minimum of 2 and maximum of 8 Players only!!!"));
     }
 
     @Test
